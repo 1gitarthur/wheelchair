@@ -1,0 +1,100 @@
+// Define pins for motor control
+const int leftMotorPin = 9;
+const int rightMotorPin = 10;
+
+// Define pins for obstacle detection
+const int obstaclePin = 7;
+
+// Define voice commands
+enum VoiceCommand { Forward, Backward, Stop, Right, Left };
+
+void setup() {
+  // Initialize motor control pins as outputs
+  pinMode(leftMotorPin, OUTPUT);
+  pinMode(rightMotorPin, OUTPUT);
+  
+  // Initialize obstacle detection pin as input
+  pinMode(obstaclePin, INPUT);
+  
+  // Start serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Simulate voice recognition (replace with actual voice recognition code)
+  VoiceCommand recognizedCommand = recognizeVoiceCommand();
+  
+  // Generate control command based on recognized voice command
+  switch (recognizedCommand) {
+    case Forward:
+      moveForward();
+      break;
+    case Backward:
+      moveBackward();
+      break;
+    case Stop:
+      stop();
+      break;
+    case Right:
+      turnRight();
+      break;
+    case Left:
+      turnLeft();
+      break;
+    default:
+      stop();
+  }
+  
+  // Simulate obstacle detection
+  bool obstacleDetected = detectObstacle();
+  if (obstacleDetected) {
+    Serial.println("Obstacle detected! Stopping...");
+    stop();
+  }
+  
+  delay(1000); // Delay for stability
+}
+
+// Simulated voice recognition function
+VoiceCommand recognizeVoiceCommand() {
+  // Replace this with actual voice recognition code
+  int commandIndex = random(0, 5); // Randomly select a command index
+  return VoiceCommand(commandIndex);
+}
+
+// Simulated motor control functions
+void moveForward() {
+  digitalWrite(leftMotorPin, HIGH);
+  digitalWrite(rightMotorPin, HIGH);
+  Serial.println("Moving forward...");
+}
+
+void moveBackward() {
+  digitalWrite(leftMotorPin, LOW);
+  digitalWrite(rightMotorPin, LOW);
+  Serial.println("Moving backward...");
+}
+
+void stop() {
+  digitalWrite(leftMotorPin, LOW);
+  digitalWrite(rightMotorPin, LOW);
+  Serial.println("Stopping...");
+}
+
+void turnRight() {
+  digitalWrite(leftMotorPin, HIGH);
+  digitalWrite(rightMotorPin, LOW);
+  Serial.println("Turning right...");
+}
+
+void turnLeft() {
+  digitalWrite(leftMotorPin, LOW);
+  digitalWrite(rightMotorPin, HIGH);
+  Serial.println("Turning left...");
+}
+
+// Simulated obstacle detection function
+bool detectObstacle() {
+  // Simulate obstacle detection using a random number
+  return random(0, 2); // 50% chance of detecting an obstacle
+}
